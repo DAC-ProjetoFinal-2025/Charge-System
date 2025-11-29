@@ -1,0 +1,46 @@
+### Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+.mvn/wrapper/MavenWrapperDownloader.java
+.mvn/wrapper/maven-wrapper.jar
+
+### IntelliJ ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### VS Code / Antigravity ###
+.vscode/
+
+### Logs ###
+logs/
+*.log
+*.trace
+*.out
+
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Java ###
+*.class
+*.jar
+*.war
+*.ear
+
+### Spring Boot ###
+# Actuator dumps
+heapdump*
+hs_err_pid*
+replay_pid*
+
+### Build ###
+/bin/
+/build/
+
+### JetBrains ###
+.idea/
+*.iml
