@@ -1,0 +1,52 @@
+version: "3.8"
+
+# POSTGRESQL #
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+# CHARGE PROXY #
+
+  charge-proxy:
+    image: rainan00/charge-proxy:latest
+    container_name: charge-proxy
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    deploy:
+      replicas: 1
+
+# CHARGE MANAGER #
+
+  charge-manager:
+    image: rainan00/charge-manager:latest
+    container_name: charge-manager
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    deploy:
+      replicas: 1
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
