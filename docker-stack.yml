@@ -1,52 +1,61 @@
-version: "3.8"
-
-# POSTGRESQL #
+version: '3.8'
 
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: postgres
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin123
-      POSTGRES_DB: mydb
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - app-network
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-
-# CHARGE PROXY #
-
-  charge-proxy:
-    image: rainan00/charge-proxy:latest
-    container_name: charge-proxy
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    networks:
-      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
     deploy:
       replicas: 1
-
-# CHARGE MANAGER #
+      restart_policy:
+        condition: on-failure
 
   charge-manager:
     image: rainan00/charge-manager:latest
-    container_name: charge-manager
-    ports:
-      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
     depends_on:
       - postgres
     networks:
       - app-network
+    ports:
+      - "8081:8081"
     deploy:
       replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  charge-proxy:
+    image: rainan00/charge-proxy:latest
+    environment:
+      CHARGE_MANAGER_URL: http://charge-manager:8081
+    depends_on:
+      - charge-manager
+    networks:
+      - app-network
+    ports:
+      - "8080:8080"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
 
 volumes:
   postgres_data:
 
 networks:
   app-network:
+    driver: overlay
