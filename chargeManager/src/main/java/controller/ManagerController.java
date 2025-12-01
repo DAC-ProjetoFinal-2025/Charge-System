@@ -15,7 +15,13 @@ public class ManagerController {
 
     @PostMapping
     public ResponseEntity<ChargeResponseDTO> receiveCharge(@RequestBody ChargeDTO chargeDTO) {
-        ChargeDTO processed = managerService.processCharge(chargeDTO);
+        // Converte para ChargeDTO se necessário (caso venha sem id)
+        ChargeDTO chargeToProcess = new ChargeDTO();
+        chargeToProcess.setAmount(chargeDTO.getAmount());
+        chargeToProcess.setCustomerName(chargeDTO.getCustomerName());
+        chargeToProcess.setStatus(chargeDTO.getStatus() != null ? chargeDTO.getStatus() : "PENDING");
+        
+        ChargeDTO processed = managerService.processCharge(chargeToProcess);
         
         ChargeResponseDTO response = new ChargeResponseDTO();
         response.setId(processed.getId() != null ? processed.getId().toString() : null);

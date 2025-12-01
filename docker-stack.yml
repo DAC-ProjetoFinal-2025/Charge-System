@@ -15,27 +15,18 @@ services:
       - app-network
     deploy:
       replicas: 1
-
-  # CHARGE PROXY
-  charge-proxy:
-    image: rainan00/charge-proxy:latest
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin123
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
-    networks:
-      - app-network
-    deploy:
-      replicas: 1
       restart_policy:
         condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mydb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
-  # CHARGE MANAGER
+  # CHARGE MANAGER (deve iniciar antes do charge-proxy)
   charge-manager:
     image: rainan00/charge-manager:latest
     ports:
@@ -53,9 +44,51 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      update_config:
+        failure_action: rollback
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8081/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # CHARGE PROXY
+  charge-proxy:
+    image: rainan00/charge-proxy:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - charge-manager
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      CHARGE_MANAGER_URL: http://charge-manager:8081
+    networks:
+      - app-network
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+      update_config:
+        failure_action: rollback
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
 volumes:
   postgres_data:
 
 networks:
   app-network:
+    driver: overlay
