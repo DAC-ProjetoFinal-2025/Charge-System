@@ -1,4 +1,4 @@
-package dto;
+package br.edu.ifpb.dac.dto;
 
 import lombok.Data;
 import java.math.BigDecimal;

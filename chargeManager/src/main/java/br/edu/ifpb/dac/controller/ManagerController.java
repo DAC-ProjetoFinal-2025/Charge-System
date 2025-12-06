@@ -1,8 +1,8 @@
-package controller;
+package br.edu.ifpb.dac.controller;
 
-import dto.ChargeDTO;
-import dto.ChargeResponseDTO;
-import service.ManagerService;
+import br.edu.ifpb.dac.dto.ChargeDTO;
+import br.edu.ifpb.dac.dto.ChargeResponseDTO;
+import br.edu.ifpb.dac.service.ManagerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

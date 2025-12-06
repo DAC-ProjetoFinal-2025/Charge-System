@@ -1,13 +1,11 @@
-package controller;
+package br.edu.ifpb.dac.controller;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
-import dto.ChargeRequestDTO;
-import dto.ChargeResponseDTO;
-import service.ChargeService;
+import br.edu.ifpb.dac.dto.ChargeRequestDTO;
+import br.edu.ifpb.dac.dto.ChargeResponseDTO;
+import br.edu.ifpb.dac.service.ChargeService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -19,7 +17,11 @@ public class ChargeController {
 
     @PostMapping
     public ChargeResponseDTO createCharge(@RequestBody ChargeRequestDTO request) {
+        System.out.println("Teste");
         log.info("Creating charge: {}", request);
         return chargeService.createCharge(request);
     }
+
+    @GetMapping("/status")
+    public String status() { return "ok"; }
 }
