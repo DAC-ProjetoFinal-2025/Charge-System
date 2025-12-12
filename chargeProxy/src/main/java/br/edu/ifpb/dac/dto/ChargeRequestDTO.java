@@ -1,7 +1,9 @@
 package br.edu.ifpb.dac.dto;
 
 import java.math.BigDecimal;
-import lombok.Data;
+
+import lombok.*;
+
 
 @Data
 public class ChargeRequestDTO {

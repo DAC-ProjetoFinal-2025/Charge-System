@@ -1,7 +1,12 @@
 package br.edu.ifpb.dac.dto;
 
-import lombok.Data;
+import lombok.*;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class ChargeResponseDTO {
     private String id;

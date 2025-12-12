@@ -24,6 +24,8 @@ public class ChargeService {
         managerDTO.setCustomerName(request.getCustomerName());
         managerDTO.setStatus("PENDING");
 
+
+
         ChargeResponseDTO response = chargeManagerClient.notifyManager(managerDTO);
 
         return response;

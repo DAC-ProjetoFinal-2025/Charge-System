@@ -1,6 +1,7 @@
 package br.edu.ifpb.dac.controller;
 
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 import br.edu.ifpb.dac.dto.ChargeRequestDTO;
@@ -10,7 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/charges")
+@RequestMapping(value = "/charges", consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class ChargeController {
     private final ChargeService chargeService;
