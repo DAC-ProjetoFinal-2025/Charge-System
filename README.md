@@ -3,6 +3,7 @@
 OBS: Necessário instalar o Docker(Linux) ou Docker Setup(Windows)
 
 
+
 ### Primeiro passo:
 
 ```bash
@@ -13,6 +14,7 @@ git clone https://github.com/DAC-ProjetoFinal-2025/Charge-System
 
 ```bash
 cd Charge-System
+OBS: Utilizar a branch dev, usando o comando git checkout dev no terminal
 ```
 
 ### Terceiro passo:
