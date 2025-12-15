@@ -1,6 +1,6 @@
-package repository;
+package br.edu.ifpb.dac.repository;
 
-import dto.ChargeDTO;
+import br.edu.ifpb.dac.dto.ChargeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

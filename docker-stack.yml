@@ -1,49 +1,60 @@
 version: "3.8"
 
-# POSTGRESQL #
-
 services:
+
+  # POSTGRESQL
   postgres:
     image: postgres:15-alpine
-    container_name: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: admin123
       POSTGRES_DB: mydb
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+    deploy:
+      replicas: 1
 
-# CHARGE PROXY #
-
+  # CHARGE PROXY
   charge-proxy:
-    image: rainan00/charge-proxy:latest
-    container_name: charge-proxy
+    image: charge-proxy-teste:latest
     ports:
       - "8080:8080"
     depends_on:
       - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      USE_SYSTEM_CA_CERTIFICATES: 0
     networks:
       - app-network
     deploy:
       replicas: 1
+      restart_policy:
+        condition: on-failure
 
-# CHARGE MANAGER #
-
+  # CHARGE MANAGER
   charge-manager:
-    image: rainan00/charge-manager:latest
-    container_name: charge-manager
+    image: charge-manager-teste:latest
     ports:
       - "8081:8081"
     depends_on:
       - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/mydb
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin123
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      USE_SYSTEM_CA_CERTIFICATES: 0
     networks:
       - app-network
     deploy:
       replicas: 1
+      restart_policy:
+        condition: on-failure
 
 volumes:
   postgres_data:

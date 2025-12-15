@@ -1,11 +1,11 @@
-package service;
+package br.edu.ifpb.dac.service;
 
-import integration.ChargeManagerClient;
+import br.edu.ifpb.dac.integration.ChargeManagerClient;
 
 import org.springframework.stereotype.Service;
-import dto.ChargeManagerDTO;
-import dto.ChargeRequestDTO;
-import dto.ChargeResponseDTO;
+import br.edu.ifpb.dac.dto.ChargeManagerDTO;
+import br.edu.ifpb.dac.dto.ChargeRequestDTO;
+import br.edu.ifpb.dac.dto.ChargeResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,6 +23,8 @@ public class ChargeService {
         managerDTO.setAmount(request.getAmount());
         managerDTO.setCustomerName(request.getCustomerName());
         managerDTO.setStatus("PENDING");
+
+
 
         ChargeResponseDTO response = chargeManagerClient.notifyManager(managerDTO);
 

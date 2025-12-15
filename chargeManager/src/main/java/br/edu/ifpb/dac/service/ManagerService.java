@@ -1,7 +1,7 @@
-package service;
+package br.edu.ifpb.dac.service;
 
-import dto.ChargeDTO;
-import repository.ChargeRepository;
+import br.edu.ifpb.dac.dto.ChargeDTO;
+import br.edu.ifpb.dac.repository.ChargeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
