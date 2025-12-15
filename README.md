@@ -14,7 +14,7 @@ git clone https://github.com/DAC-ProjetoFinal-2025/Charge-System
 
 ```bash
 cd Charge-System
-OBS: Utilizar a branch dev, usando o comando git checkout dev no terminal
+OBS: Utilizar a branch main, certifique-se de estar na branch main rodando o comando: git checkout main
 ```
 
 ### Terceiro passo:
