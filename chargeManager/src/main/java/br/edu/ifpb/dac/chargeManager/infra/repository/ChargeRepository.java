@@ -15,5 +15,7 @@ public interface ChargeRepository {
 
     List<Charge> findByUserId(Long userId);
 
+    List<Charge> findAll();
+
     void update(Charge charge);
 }

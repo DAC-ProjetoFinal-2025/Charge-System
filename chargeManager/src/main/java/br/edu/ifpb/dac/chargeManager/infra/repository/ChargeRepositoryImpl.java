@@ -81,6 +81,12 @@ public class ChargeRepositoryImpl implements ChargeRepository {
     }
 
     @Override
+    public List<Charge> findAll() {
+        String sql = "SELECT * FROM charges ORDER BY created_at DESC";
+        return jdbcTemplate.query(sql, chargeRowMapper);
+    }
+
+    @Override
     public void update(Charge charge) {
         String sql = "UPDATE charges SET user_id = ?, name = ?, amount = ?, payment_type = ?, " +
                 "customer = ?, due_date = ?, status = ?, external_id = ?, updated_at = NOW() WHERE id = ?";

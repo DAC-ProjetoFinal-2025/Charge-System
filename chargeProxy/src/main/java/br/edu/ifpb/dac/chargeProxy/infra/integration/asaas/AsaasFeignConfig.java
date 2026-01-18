@@ -17,7 +17,7 @@ public class AsaasFeignConfig {
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
             // HARDCODE PARA TESTE FINAL - COLOQUE SUA CHAVE AQUI
-            String key = "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OjEwNjU1ODU6OiRhYWN0X2htbGdfMGY2YTMxODgtM2M5ZS00NzRhLWFhOGYtODcwZDQwNjUxYWE2";
+            String key = "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmYyM2FjOGQyLWZlMGYtNGM2Ni04NzVmLWI3ZDQzODMxNjc0Yjo6JGFhY2hfMzNmMjkzMDItMWRiNy00Yjc3LTkyOTYtMTNhZDUyODJkNzZl";
 
             if (key != null) {
                 // Mantemos a limpeza para garantir que não haja lixo binário no CTRL+C / CTRL+V

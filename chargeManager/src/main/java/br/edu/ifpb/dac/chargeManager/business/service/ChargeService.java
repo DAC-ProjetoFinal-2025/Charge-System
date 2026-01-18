@@ -11,4 +11,6 @@ public interface ChargeService {
     Charge getChargeById(Long id);
 
     List<Charge> getChargesByUserId(Long userId);
+
+    List<Charge> getAllCharges();
 }

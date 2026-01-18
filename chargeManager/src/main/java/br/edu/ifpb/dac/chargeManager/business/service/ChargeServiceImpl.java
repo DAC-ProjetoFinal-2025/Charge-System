@@ -69,4 +69,9 @@ public class ChargeServiceImpl implements ChargeService {
     public List<Charge> getChargesByUserId(Long userId) {
         return chargeRepository.findByUserId(userId);
     }
+
+    @Override
+    public List<Charge> getAllCharges() {
+        return chargeRepository.findAll();
+    }
 }

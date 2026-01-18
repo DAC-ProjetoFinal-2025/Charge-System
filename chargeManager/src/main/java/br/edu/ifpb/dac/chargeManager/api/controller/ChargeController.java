@@ -40,6 +40,17 @@ public class ChargeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
+    @GetMapping
+    public ResponseEntity<List<ChargeResponseDto>> getAllCharges() {
+        List<Charge> charges = chargeService.getAllCharges();
+
+        List<ChargeResponseDto> responseDtos = charges.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(responseDtos);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ChargeResponseDto> getChargeById(@PathVariable Long id) {
         Charge charge = chargeService.getChargeById(id);
