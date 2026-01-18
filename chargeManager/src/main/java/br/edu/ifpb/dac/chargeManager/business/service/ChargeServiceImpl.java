@@ -31,7 +31,7 @@ public class ChargeServiceImpl implements ChargeService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + charge.getUserId()));
 
         // Set initial status
-        charge.setStatus("PENDING");
+        charge.setStatus("REGISTERED");
 
         // Save charge to database
         Charge savedCharge = chargeRepository.save(charge);
