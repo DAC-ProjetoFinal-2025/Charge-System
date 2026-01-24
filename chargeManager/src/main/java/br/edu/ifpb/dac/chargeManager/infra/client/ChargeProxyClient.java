@@ -24,4 +24,8 @@ public class ChargeProxyClient {
         // Calling the SOAP service
         return chargeSoapClient.charge(request);
     }
+
+    public boolean cancelCharge(String externalId) {
+        return chargeSoapClient.cancel(externalId);
+    }
 }

@@ -10,7 +10,10 @@ import jakarta.jws.soap.SOAPBinding.Style;
 @WebService
 @SOAPBinding(style = Style.RPC)
 public interface ChargeService {
-    
+
     @WebMethod
     ChargeResponseDto charge(ChargeRequestDto chargeRequestDto);
+
+    @WebMethod
+    boolean cancel(String externalId);
 }

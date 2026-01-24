@@ -1,12 +1,15 @@
 package br.edu.ifpb.dac.chargeManager.business.service.impl;
 
 import br.edu.ifpb.dac.chargeManager.api.dto.UpdateChargeStatusResponseDto;
+import br.edu.ifpb.dac.chargeManager.business.event.ChargeStatusChangedEvent;
 import br.edu.ifpb.dac.chargeManager.business.model.Charge;
 import br.edu.ifpb.dac.chargeManager.business.service.WebhookService;
 import br.edu.ifpb.dac.chargeManager.infra.repository.ChargeRepository;
+import br.edu.ifpb.dac.chargeManager.infra.repository.UserRepository;
 import jakarta.jws.WebService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,6 +25,8 @@ import java.util.Optional;
 public class WebhookServiceImpl implements WebhookService {
 
     private final ChargeRepository chargeRepository;
+    private final UserRepository userRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public UpdateChargeStatusResponseDto updateChargeStatus(String externalId, String status) {
@@ -47,6 +52,13 @@ public class WebhookServiceImpl implements WebhookService {
 
             log.info("Status atualizado com sucesso - ID: {}, Status anterior: {}, Novo status: {}",
                     charge.getId(), oldStatus, status);
+
+            // Observer Pattern: Publica evento de mudança de status
+            // Buscamos o email do usuário para o evento
+            var user = userRepository.findById(charge.getUserId()).orElse(null);
+            String userEmail = (user != null) ? user.getEmail() : null;
+
+            eventPublisher.publishEvent(new ChargeStatusChangedEvent(this, charge, oldStatus, status, userEmail));
 
             return new UpdateChargeStatusResponseDto(true,
                     "Status atualizado de " + oldStatus + " para " + status);

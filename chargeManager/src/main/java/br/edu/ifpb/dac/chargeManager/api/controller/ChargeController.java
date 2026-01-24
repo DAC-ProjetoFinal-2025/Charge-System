@@ -58,6 +58,13 @@ public class ChargeController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @PostMapping("/{id}/cancel")
+    public ResponseEntity<ChargeResponseDto> cancelCharge(@PathVariable Long id) {
+        Charge canceledCharge = chargeService.cancelCharge(id);
+        ChargeResponseDto responseDto = convertToDto(canceledCharge);
+        return ResponseEntity.ok(responseDto);
+    }
+
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ChargeResponseDto>> getChargesByUserId(@PathVariable Long userId) {
         List<Charge> charges = chargeService.getChargesByUserId(userId);

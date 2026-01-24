@@ -16,14 +16,13 @@ public class AsaasFeignConfig {
     @Bean
     public RequestInterceptor requestInterceptor() {
         return requestTemplate -> {
-            // HARDCODE PARA TESTE FINAL - COLOQUE SUA CHAVE AQUI
-            String key = "$aact_hmlg_000MzkwODA2MWY2OGM3MWRlMDU2NWM3MzJlNzZmNGZhZGY6OmYyM2FjOGQyLWZlMGYtNGM2Ni04NzVmLWI3ZDQzODMxNjc0Yjo6JGFhY2hfMzNmMjkzMDItMWRiNy00Yjc3LTkyOTYtMTNhZDUyODJkNzZl";
+            String key = asaasProperties.getKey();
 
             if (key != null) {
                 // Mantemos a limpeza para garantir que não haja lixo binário no CTRL+C / CTRL+V
                 key = key.replaceAll("[^\\x20-\\x7E]", "").trim();
 
-                log.info("### INTERCEPTOR ASAAS (HARDCODED) ###");
+                log.info("### INTERCEPTOR ASAAS (CONFIGURED) ###");
                 log.info("Key sanitized starts with: {}", key.substring(0, Math.min(key.length(), 4)));
             }
 

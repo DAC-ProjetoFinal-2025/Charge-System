@@ -39,4 +39,16 @@ public class ChargeServiceImpl implements ChargeService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public boolean cancel(String externalId) {
+        try {
+            System.out.println("### DEBUG: Cancelando cobrança no Asaas: " + externalId + " ###");
+            asaasClient.deleteCharge(externalId);
+            return true;
+        } catch (Exception e) {
+            System.err.println("### ERRO AO CANCELAR NO PROXY: " + e.getMessage());
+            return false;
+        }
+    }
 }

@@ -11,4 +11,7 @@ public interface AsaasClient {
 
     @PostMapping("/api/v3/payments")
     ChargeResponseDto createCharge(@RequestBody ChargeRequestDto request);
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/api/v3/payments/{id}")
+    void deleteCharge(@org.springframework.web.bind.annotation.PathVariable("id") String id);
 }

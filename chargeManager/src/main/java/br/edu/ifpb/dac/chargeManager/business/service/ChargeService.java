@@ -8,6 +8,8 @@ public interface ChargeService {
 
     Charge createCharge(Charge charge);
 
+    Charge cancelCharge(Long id);
+
     Charge getChargeById(Long id);
 
     List<Charge> getChargesByUserId(Long userId);
