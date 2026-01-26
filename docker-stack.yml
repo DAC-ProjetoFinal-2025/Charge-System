@@ -59,6 +59,7 @@ services:
       - DB_NAME
       - DB_USER_NAME
       - DB_PASSWORD
+      - USER_MAIL
     networks:
       - app-network
     deploy:
@@ -98,4 +99,6 @@ secrets:
   ASAAS_SANDBOX_API_KEY:
     external: true
   ASAAS_WEBHOOK_TOKEN:
+    external: true
+  USER_MAIL:
     external: true

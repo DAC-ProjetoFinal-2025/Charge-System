@@ -14,17 +14,19 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-    // Hardcoded email as requested by the user
+    @org.springframework.beans.factory.annotation.Value("${USER_MAIL}")
+    private String defaultRecipientEmail;
+
+    // Hardcoded sender email as requested by the user
     private static final String SENDER_EMAIL = "charge-system@example.com";
-    private static final String DEFAULT_RECIPIENT_EMAIL = "user-default@example.com";
 
     public void sendChargeNotification(Charge charge, String userEmail) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(SENDER_EMAIL);
 
-            // Use provided user email if available, otherwise use default
-            String recipient = (userEmail != null && !userEmail.isEmpty()) ? userEmail : DEFAULT_RECIPIENT_EMAIL;
+            // Use provided user email if available, otherwise use secret value
+            String recipient = (userEmail != null && !userEmail.isEmpty()) ? userEmail : defaultRecipientEmail;
             message.setTo(recipient);
 
             message.setSubject("Nova Cobrança Criada: " + charge.getName());

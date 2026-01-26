@@ -41,22 +41,22 @@ public class ChargeServiceImpl implements ChargeService {
         // Set initial status
         charge.setStatus("REGISTERED");
 
-        // Save charge to database
+        // Salva charge no banco de dados
         Charge savedCharge = chargeRepository.save(charge);
 
         try {
-            // Call ChargeProxy via SOAP to create charge in Asaas
+            // Chama ChargeProxy via SOAP para criar charge no Asaas
             ChargeResponseDto response = chargeProxyClient.sendCharge(
                     savedCharge.getAmount(),
                     savedCharge.getPaymentType(),
                     savedCharge.getCustomer(),
                     savedCharge.getDueDate());
 
-            // Update charge with external data
+            // Atualiza charge com dados externos
             savedCharge.setExternalId(response.getId());
             savedCharge.setStatus(response.getStatus());
 
-            // Update in database
+            // Atualiza no banco de dados
             chargeRepository.update(savedCharge);
 
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class ChargeServiceImpl implements ChargeService {
             System.err.println("Error calling ChargeProxy: " + e.getMessage());
         }
 
-        // Send email notification at the very end
+        // Envia notificação de email no final
         emailService.sendChargeNotification(savedCharge, user.getEmail());
 
         return savedCharge;
@@ -79,7 +79,7 @@ public class ChargeServiceImpl implements ChargeService {
         }
 
         try {
-            // Call ChargeProxy to cancel in Asaas
+            // Chama ChargeProxy para cancelar no Asaas
             boolean success = chargeProxyClient.cancelCharge(charge.getExternalId());
 
             if (success) {
@@ -87,7 +87,7 @@ public class ChargeServiceImpl implements ChargeService {
                 charge.setStatus("CANCELED");
                 chargeRepository.update(charge);
 
-                // Observer Pattern: Publish event for cancellation
+                // Observer Pattern: Publica evento para cancelamento
                 var user = userRepository.findById(charge.getUserId()).orElse(null);
                 String userEmail = (user != null) ? user.getEmail() : null;
                 eventPublisher

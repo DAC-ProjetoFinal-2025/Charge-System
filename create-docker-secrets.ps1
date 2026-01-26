@@ -3,7 +3,8 @@ $secrets = @(
     @{ Name = "DB_USER_NAME"; Secure = $false },
     @{ Name = "DB_PASSWORD"; Secure = $true },
     @{ Name = "ASAAS_SANDBOX_API_KEY"; Secure = $true },
-    @{ Name = "ASAAS_WEBHOOK_TOKEN"; Secure = $true }
+    @{ Name = "ASAAS_WEBHOOK_TOKEN"; Secure = $true },
+    @{ Name = "USER_MAIL"; Secure = $false }
 )
 
 Write-Host "=== Criador de Docker Secrets (SEM newline invisivel) ===" -ForegroundColor Yellow
