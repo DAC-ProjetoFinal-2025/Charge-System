@@ -19,7 +19,7 @@ public class WebhookController {
 
     private final WebhookService webhookService;
 
-    @Value("${ASAAS_WEBHOOK_TOKEN:}")
+    @Value("${asaas.webhook.token}")
     private String webhookToken;
 
     @PostMapping("/asaas")

@@ -17,18 +17,18 @@ public class ChargeServiceImpl implements ChargeService {
     private final ChargeRepository chargeRepository;
     private final UserRepository userRepository;
     private final ChargeProxyClient chargeProxyClient;
-    private final EmailService emailService;
+    // private final EmailService emailService; // Temporarily disabled
     private final ApplicationEventPublisher eventPublisher;
 
     public ChargeServiceImpl(ChargeRepository chargeRepository,
             UserRepository userRepository,
             ChargeProxyClient chargeProxyClient,
-            EmailService emailService,
+            // EmailService emailService, // Temporarily disabled
             ApplicationEventPublisher eventPublisher) {
         this.chargeRepository = chargeRepository;
         this.userRepository = userRepository;
         this.chargeProxyClient = chargeProxyClient;
-        this.emailService = emailService;
+        // this.emailService = emailService; // Temporarily disabled
         this.eventPublisher = eventPublisher;
     }
 
@@ -65,7 +65,8 @@ public class ChargeServiceImpl implements ChargeService {
         }
 
         // Envia notificação de email no final
-        emailService.sendChargeNotification(savedCharge, user.getEmail());
+        // emailService.sendChargeNotification(savedCharge, user.getEmail()); //
+        // Temporarily disabled
 
         return savedCharge;
     }

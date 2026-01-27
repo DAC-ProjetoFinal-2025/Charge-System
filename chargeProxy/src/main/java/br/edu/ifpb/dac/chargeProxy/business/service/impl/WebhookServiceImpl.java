@@ -19,9 +19,17 @@ public class WebhookServiceImpl implements WebhookService {
 
     @Override
     public void processAsaasWebhook(AsaasWebhookDto webhookDto) {
-        log.info("Processando webhook do Asaas - Event: {}, Payment ID: {}",
-                webhookDto.getEvent(),
-                webhookDto.getPayment().getId());
+        log.info("Processando webhook do Asaas - Event: {}", webhookDto.getEvent());
+
+        // Validar se o webhook contém dados de pagamento
+        if (webhookDto.getPayment() == null) {
+            log.warn("Webhook recebido sem dados de pagamento. Event: {}. " +
+                    "Este tipo de evento pode não conter informações de pagamento.",
+                    webhookDto.getEvent());
+            return; // Ignora webhooks sem dados de pagamento
+        }
+
+        log.info("Payment ID: {}", webhookDto.getPayment().getId());
 
         try {
             // Extrai os dados relevantes do webhook
