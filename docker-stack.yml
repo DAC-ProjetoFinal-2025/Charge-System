@@ -27,7 +27,7 @@ services:
 
   # CHARGE PROXY
   charge-proxy:
-    image: projeto-dac-charge-proxy:1.9
+    image: rainan00/charge-proxy:latest
     ports:
       - "8082:8082"
       - "8089:8089"
@@ -46,7 +46,7 @@ services:
 
   # CHARGE MANAGER
   charge-manager:
-    image: projeto-dac-charge-manager:1.9
+    image: rainan00/charge-manager:latest
     ports:
       - "8085:8085"
       - "8090:8090"
