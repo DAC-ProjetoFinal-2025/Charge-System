@@ -1,6 +1,17 @@
 # Charge System 💳
 
-Sistema robusto de gerenciamento de cobranças composto por microserviços integrados, utilizando comunicação SOAP-RPC e persistência em PostgreSQL, orquestrado via Docker Swarm.
+## 📌 Sobre o Projeto
+
+Sistema de integração de pagamentos projetado para gerenciar cobranças de forma automatizada, utilizando comunicação síncrona (SOAP/REST) e assíncrona (webhooks), garantindo consistência e atualização em tempo real dos dados financeiros.
+
+## 🔄 Fluxo de Funcionamento
+
+1. O Charge Manager solicita a criação de uma cobrança via SOAP
+2. O Charge Proxy traduz a requisição para REST e envia ao ASAAS
+3. O ASAAS processa a cobrança
+4. Eventos de pagamento são enviados via webhook para o Proxy
+5. O Proxy atualiza o Manager com o novo status da cobrança
+6. O Manager atualiza o banco de dados com as novas informações
 
 > [!IMPORTANT]
 > **Pré-requisito Fundamental**: O usuário precisa ter uma conta no [Asaas Sandbox](https://sandbox.asaas.com/) criada para gerar a **Chave API** e configurar o **Webhook** com o seu respectivo **Token**. Sem essas credenciais, a integração com o gateway de pagamentos não funcionará.
@@ -100,3 +111,8 @@ docker stack deploy -c docker-stack.yml charge-system
 ---
 > [!IMPORTANT]
 > Certifique-se de configurar a `ASAAS_SANDBOX_API_KEY` nos secrets para que o proxy funcione corretamente.
+>
+
+## 👨‍💻 Autores
+
+Projeto desenvolvido por Rainan Jorge, Marcos Viana e Gabriel Monteiro como estudo prático de integração de sistemas e arquitetura de microserviços.
